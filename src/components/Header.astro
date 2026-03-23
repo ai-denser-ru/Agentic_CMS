@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+
+const settingsEntries = await getCollection('settings');
+const navEntry = settingsEntries.find((e) => e.id === 'navigation');
+const navData = navEntry?.data as { main_menu?: { label: string; href: string }[] } | undefined;
+const menuItems = navData?.main_menu ?? [];
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<header class="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800">
+  <nav class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <a href={`${base}/`} class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent hover:from-indigo-300 hover:to-cyan-300 transition-all duration-300">
+      Agentic CMS
+    </a>
+
+    <ul class="flex items-center gap-1">
+      {menuItems.map((item) => (
+        <li>
+          <a
+            href={`${base}${item.href}`}
+            class="px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-all duration-200"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
