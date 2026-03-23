@@ -1,9 +1,10 @@
 {
-  "id": "business",
-  "name": "Agentic Café & Studio",
-  "phone": "+7 (999) 123-45-67",
-  "email": "hello@agentic.cafe",
-  "address": "ул. Примерная, д. 42, Москва",
+  "id": "business-es",
+  "locale": "es",
+  "name": "Agentic Café & Estudio",
+  "phone": "+54 (11) 1234-5678",
+  "email": "hola@agentic.cafe",
+  "address": "Av. Corrientes 1234, Buenos Aires",
   "hours": {
     "weekdays": "08:00 – 22:00",
     "weekends": "10:00 – 20:00"

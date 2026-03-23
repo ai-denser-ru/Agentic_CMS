@@ -1,0 +1,74 @@
+import { ui, defaultLocale, locales, type Locale } from './ui';
+
+/**
+ * Extract the current locale from a URL pathname.
+ * E.g. "/Agentic_CMS/ru/about/" → "ru"
+ *      "/Agentic_CMS/nodes/espresso/" → "es" (default, no prefix)
+ */
+export function getLangFromUrl(url: URL): Locale {
+  const segments = url.pathname.split('/').filter(Boolean);
+  // Skip the base path segment ("Agentic_CMS")
+  const afterBase = segments.length > 1 ? segments[1] : segments[0];
+  if (afterBase && (locales as readonly string[]).includes(afterBase)) {
+    return afterBase as Locale;
+  }
+  return defaultLocale;
+}
+
+/**
+ * Get a translation function for the given locale.
+ */
+export function useTranslations(lang: Locale) {
+  return function t(key: string): string {
+    return ui[lang]?.[key] ?? ui[defaultLocale]?.[key] ?? key;
+  };
+}
+
+/**
+ * Build a localized URL path. Handles the base path and default locale (no prefix).
+ * E.g. getLocalizedUrl('ru', '/about/') → "/Agentic_CMS/ru/about/"
+ *      getLocalizedUrl('es', '/about/') → "/Agentic_CMS/about/"
+ */
+export function getLocalizedUrl(locale: Locale, path: string = '/'): string {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  if (locale === defaultLocale) {
+    return `${base}${cleanPath}`;
+  }
+  return `${base}/${locale}${cleanPath}`;
+}
+
+/**
+ * Get the content folder prefix for a given locale.
+ * Used to filter content collections by locale.
+ * Content is stored as: src/content/pages/es/index.md → id = "es/index"
+ */
+export function getContentPrefix(locale: Locale): string {
+  return `${locale}/`;
+}
+
+/**
+ * Extract locale from a content entry's id.
+ * E.g. "es/index" → "es", "ru/about" → "ru"
+ */
+export function getLocaleFromId(id: string): Locale {
+  const prefix = id.split('/')[0];
+  if ((locales as readonly string[]).includes(prefix)) {
+    return prefix as Locale;
+  }
+  return defaultLocale;
+}
+
+/**
+ * Strip the locale prefix from a content entry's id to get the slug.
+ * E.g. "es/index" → "index", "ru/espresso" → "espresso"
+ */
+export function getSlugFromId(id: string): string {
+  const parts = id.split('/');
+  if ((locales as readonly string[]).includes(parts[0])) {
+    return parts.slice(1).join('/');
+  }
+  return id;
+}
+
+export { defaultLocale, locales, type Locale } from './ui';

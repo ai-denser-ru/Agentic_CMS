@@ -1,9 +1,0 @@
-{
-  "id": "navigation",
-  "main_menu": [
-    { "label": "Главная", "href": "/" },
-    { "label": "О нас", "href": "/about" },
-    { "label": "Меню", "href": "/nodes" },
-    { "label": "Контакты", "href": "#contacts" }
-  ]
-}

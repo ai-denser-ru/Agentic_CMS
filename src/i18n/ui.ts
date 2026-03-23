@@ -1,0 +1,90 @@
+/**
+ * UI string translations for static interface elements.
+ * Content translations live in Markdown files per locale.
+ */
+
+export const defaultLocale = 'es' as const;
+export const locales = ['es', 'pt-br', 'ru', 'en'] as const;
+export type Locale = (typeof locales)[number];
+
+export const localeLabels: Record<Locale, string> = {
+  es: 'Español',
+  'pt-br': 'Português',
+  ru: 'Русский',
+  en: 'English',
+};
+
+export const ui: Record<Locale, Record<string, string>> = {
+  es: {
+    'nav.home': 'Inicio',
+    'nav.about': 'Sobre nosotros',
+    'nav.catalog': 'Catálogo',
+    'nav.contacts': 'Contactos',
+    'catalog.title': 'Catálogo',
+    'catalog.breadcrumb': 'Catálogo',
+    'home.breadcrumb': 'Inicio',
+    'footer.contacts': 'Contactos',
+    'footer.hours': 'Horario',
+    'footer.weekdays': 'Lun–Vie',
+    'footer.weekends': 'Sáb–Dom',
+    'footer.powered': 'Funciona con Astro.js',
+    'lang.switch': 'Idioma',
+    'type.menu_item': 'Plato',
+    'type.class': 'Clase',
+    'type.news': 'Noticia',
+  },
+  'pt-br': {
+    'nav.home': 'Início',
+    'nav.about': 'Sobre nós',
+    'nav.catalog': 'Catálogo',
+    'nav.contacts': 'Contatos',
+    'catalog.title': 'Catálogo',
+    'catalog.breadcrumb': 'Catálogo',
+    'home.breadcrumb': 'Início',
+    'footer.contacts': 'Contatos',
+    'footer.hours': 'Horário',
+    'footer.weekdays': 'Seg–Sex',
+    'footer.weekends': 'Sáb–Dom',
+    'footer.powered': 'Desenvolvido com Astro.js',
+    'lang.switch': 'Idioma',
+    'type.menu_item': 'Prato',
+    'type.class': 'Aula',
+    'type.news': 'Notícia',
+  },
+  ru: {
+    'nav.home': 'Главная',
+    'nav.about': 'О нас',
+    'nav.catalog': 'Каталог',
+    'nav.contacts': 'Контакты',
+    'catalog.title': 'Каталог',
+    'catalog.breadcrumb': 'Каталог',
+    'home.breadcrumb': 'Главная',
+    'footer.contacts': 'Контакты',
+    'footer.hours': 'Часы работы',
+    'footer.weekdays': 'Пн–Пт',
+    'footer.weekends': 'Сб–Вс',
+    'footer.powered': 'Работает на Astro.js',
+    'lang.switch': 'Язык',
+    'type.menu_item': 'Блюдо',
+    'type.class': 'Занятие',
+    'type.news': 'Новость',
+  },
+  en: {
+    'nav.home': 'Home',
+    'nav.about': 'About',
+    'nav.catalog': 'Catalog',
+    'nav.contacts': 'Contacts',
+    'catalog.title': 'Catalog',
+    'catalog.breadcrumb': 'Catalog',
+    'home.breadcrumb': 'Home',
+    'footer.contacts': 'Contacts',
+    'footer.hours': 'Working Hours',
+    'footer.weekdays': 'Mon–Fri',
+    'footer.weekends': 'Sat–Sun',
+    'footer.powered': 'Powered by Astro.js',
+    'lang.switch': 'Language',
+    'type.menu_item': 'Dish',
+    'type.class': 'Class',
+    'type.news': 'News',
+  },
+};
