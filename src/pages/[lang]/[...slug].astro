@@ -17,10 +17,9 @@ const nonDefaultLocales = locales.filter((l) => l !== defaultLocale);
 export async function getStaticPaths() {
   const allPages = await getCollection('pages', ({ data }) => !data.draft);
   const allNodes = await getCollection('nodes', ({ data }) => !data.draft);
-  const _locales = (['en', 'ru', 'pt-br'] as const);
   const paths: any[] = [];
 
-  for (const lang of _locales) {
+  for (const lang of nonDefaultLocales) {
     const prefix = `${lang}/`;
     const localePages = allPages.filter((p) => p.id.startsWith(prefix));
     const localeNodes = allNodes.filter((n) => n.id.startsWith(prefix));

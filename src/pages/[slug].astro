@@ -12,7 +12,8 @@ const locale: Locale = defaultLocale;
 
 export async function getStaticPaths() {
   const pages = await getCollection('pages', ({ data }) => !data.draft);
-  const defaultPages = pages.filter((p) => p.id.startsWith('es/') && getSlugFromId(p.id) !== 'index');
+  const prefix = `${defaultLocale}/`;
+  const defaultPages = pages.filter((p) => p.id.startsWith(prefix) && getSlugFromId(p.id) !== 'index');
   return defaultPages.map((page) => ({
     params: { slug: getSlugFromId(page.id) },
     props: { page },

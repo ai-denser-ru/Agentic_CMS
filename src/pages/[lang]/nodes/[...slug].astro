@@ -13,10 +13,10 @@ import { getLocalizedUrl, getSlugFromId, useTranslations } from '../../../i18n/u
 
 export async function getStaticPaths() {
   const allNodes = await getCollection('nodes', ({ data }) => !data.draft);
-  const _locales = (['en', 'ru', 'pt-br'] as const);
+  const nonDefaultLocales = locales.filter((l) => l !== defaultLocale);
   const paths: any[] = [];
 
-  for (const lang of _locales) {
+  for (const lang of nonDefaultLocales) {
     const prefix = `${lang}/`;
     const localeNodes = allNodes.filter((n) => n.id.startsWith(prefix));
 

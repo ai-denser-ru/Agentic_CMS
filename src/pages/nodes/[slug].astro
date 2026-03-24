@@ -12,7 +12,8 @@ const t = useTranslations(locale);
 
 export async function getStaticPaths() {
   const nodes = await getCollection('nodes', ({ data }) => !data.draft);
-  const defaultNodes = nodes.filter((n) => n.id.startsWith('es/'));
+  const prefix = `${defaultLocale}/`;
+  const defaultNodes = nodes.filter((n) => n.id.startsWith(prefix));
   return defaultNodes.map((node) => ({
     params: { slug: getSlugFromId(node.id) },
     props: { node },
