@@ -48,11 +48,19 @@ function localizeHref(href: string): string {
       </ul>
 
       {/* Language switcher */}
-      <div class="relative ml-3 group">
-        <button class="px-2 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-gray-800 transition-all duration-200 uppercase tracking-wider border border-gray-700">
+      <div class="relative ml-3" id="lang-switcher">
+        <button
+          id="lang-toggle"
+          class="px-2 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-gray-800 transition-all duration-200 uppercase tracking-wider border border-gray-700"
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
           {locale === 'pt-br' ? 'PT' : locale.toUpperCase()}
         </button>
-        <div class="absolute right-0 top-full mt-1 bg-gray-900 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[140px] z-50">
+        <div
+          id="lang-dropdown"
+          class="absolute right-0 top-full mt-1 bg-gray-900 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 min-w-[140px] z-50"
+        >
           {locales.filter((l) => l !== locale).map((l) => (
             <a
               href={getLocalizedUrl(l, '/')}
@@ -66,3 +74,38 @@ function localizeHref(href: string): string {
     </div>
   </nav>
 </header>
+
+<style>
+  /* Desktop hover support — only on devices that support hover */
+  @media (hover: hover) {
+    #lang-switcher:hover #lang-dropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const toggle = document.getElementById('lang-toggle');
+    const dropdown = document.getElementById('lang-dropdown');
+    if (!toggle || !dropdown) return;
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.contains('!opacity-100');
+      if (isOpen) {
+        dropdown.classList.remove('!opacity-100', '!visible');
+        toggle.setAttribute('aria-expanded', 'false');
+      } else {
+        dropdown.classList.add('!opacity-100', '!visible');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.addEventListener('click', () => {
+      dropdown.classList.remove('!opacity-100', '!visible');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

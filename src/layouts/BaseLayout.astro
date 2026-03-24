@@ -36,7 +36,7 @@ const currentPath = Astro.url.pathname
     ))}
     <link rel="alternate" hreflang="x-default" href={`${Astro.site?.origin ?? ''}${getLocalizedUrl('es', currentPath)}`} />
   </head>
-  <body class="min-h-screen flex flex-col bg-gray-950 text-gray-100 font-sans antialiased">
+  <body class="min-h-dvh flex flex-col bg-gray-950 text-gray-100 font-sans antialiased">
     <Header locale={currentLocale} />
     <main class="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <slot />
