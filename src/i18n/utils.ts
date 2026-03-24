@@ -6,11 +6,15 @@ import { ui, defaultLocale, locales, type Locale } from './ui';
  *      "/Agentic_CMS/nodes/espresso/" → "es" (default, no prefix)
  */
 export function getLangFromUrl(url: URL): Locale {
-  const segments = url.pathname.split('/').filter(Boolean);
-  // Skip the base path segment ("Agentic_CMS")
-  const afterBase = segments.length > 1 ? segments[1] : segments[0];
-  if (afterBase && (locales as readonly string[]).includes(afterBase)) {
-    return afterBase as Locale;
+  const base = import.meta.env.BASE_URL;
+  // Make sure base doesn't end with slash when we slice it, unless it's just '/'
+  const cleanBase = base === '/' ? '' : base.replace(/\/$/, '');
+  const pathWithoutBase = url.pathname.startsWith(cleanBase) ? url.pathname.slice(cleanBase.length) : url.pathname;
+  const segments = pathWithoutBase.split('/').filter(Boolean);
+  const first = segments[0];
+  
+  if (first && (locales as readonly string[]).includes(first)) {
+    return first as Locale;
   }
   return defaultLocale;
 }

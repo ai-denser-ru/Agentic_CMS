@@ -12,9 +12,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { locales, defaultLocale, type Locale } from '../../i18n/ui';
 import { getLocalizedUrl, getSlugFromId, useTranslations } from '../../i18n/utils';
 
-const nonDefaultLocales = locales.filter((l) => l !== defaultLocale);
-
 export async function getStaticPaths() {
+  const nonDefaultLocales = locales.filter((l) => l !== defaultLocale);
   const allPages = await getCollection('pages', ({ data }) => !data.draft);
   const allNodes = await getCollection('nodes', ({ data }) => !data.draft);
   const paths: any[] = [];
