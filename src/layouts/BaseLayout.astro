@@ -33,9 +33,9 @@ const currentPath = Astro.url.pathname
     <title>{title} | Agentic CMS</title>
     {/* Hreflang alternates for SEO */}
     {locales.map((loc) => (
-      <link rel="alternate" hreflang={loc === 'pt-br' ? 'pt-BR' : loc} href={`${Astro.site?.origin ?? ''}${getLocalizedUrl(loc, currentPath)}`} />
+      <link rel="alternate" hreflang={loc === 'pt-br' ? 'pt-BR' : loc} href={`${Astro.site ? Astro.site.origin : ''}${getLocalizedUrl(loc, currentPath)}`} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={`${Astro.site?.origin ?? ''}${getLocalizedUrl(defaultLocale, currentPath)}`} />
+    <link rel="alternate" hreflang="x-default" href={`${Astro.site ? Astro.site.origin : ''}${getLocalizedUrl(defaultLocale, currentPath)}`} />
   </head>
   <body class="min-h-dvh flex flex-col bg-gray-950 text-gray-100 font-sans antialiased">
     <Header locale={currentLocale} currentPath={currentPath} />
@@ -46,13 +46,19 @@ const currentPath = Astro.url.pathname
 
     {/* Auto-detect language — runs only on root page, first visit */}
     {Astro.url.pathname === `${base}/` && (
-      <script is:inline define:vars={{ base }}>
+      <script is:inline define:vars={{ base, defaultLocale, locales }}>
         if (!sessionStorage.getItem('lang_detected')) {
           sessionStorage.setItem('lang_detected', '1');
-          const lang = navigator.language.toLowerCase();
-          if (lang.startsWith('pt')) location.replace(base + '/pt-br/');
-          else if (lang.startsWith('ru')) location.replace(base + '/ru/');
-          else if (lang.startsWith('en')) location.replace(base + '/en/');
+          const browserLang = navigator.language.toLowerCase();
+          
+          // Find if browser language matches any of our supported locales
+          const targetLocale = locales.find(l => 
+            browserLang.startsWith(l.split('-')[0])
+          );
+
+          if (targetLocale && targetLocale !== defaultLocale) {
+            location.replace(`${base}/${targetLocale}/`);
+          }
         }
       </script>
     )}

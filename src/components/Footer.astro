@@ -14,8 +14,8 @@ const t = useTranslations(locale);
 const settingsEntries = await getCollection('settings');
 const bizEntry = settingsEntries.find((e) => {
   const data = e.data as { locale?: string };
-  return e.id.startsWith('business') && data.locale === locale;
-}) ?? settingsEntries.find((e) => e.id.startsWith('business') && (e.data as { locale?: string }).locale === defaultLocale);
+  return e.id.startsWith('business') && (data.locale === locale || e.id.endsWith(`.${locale}`));
+}) ?? settingsEntries.find((e) => e.id.startsWith('business') && ((e.data as { locale?: string }).locale === defaultLocale || e.id.endsWith(`.${defaultLocale}`)));
 
 interface BusinessData {
   name?: string;

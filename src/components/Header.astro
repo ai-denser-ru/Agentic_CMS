@@ -14,16 +14,16 @@ const { locale, currentPath = '/' } = Astro.props;
 const settingsEntries = await getCollection('settings');
 const navEntry = settingsEntries.find((e) => {
   const data = e.data as { locale?: string };
-  return e.id.startsWith('navigation') && data.locale === locale;
-}) ?? settingsEntries.find((e) => e.id.startsWith('navigation') && (e.data as { locale?: string }).locale === defaultLocale);
+  return e.id.startsWith('navigation') && (data.locale === locale || e.id.endsWith(`.${locale}`));
+}) ?? settingsEntries.find((e) => e.id.startsWith('navigation') && ((e.data as { locale?: string }).locale === defaultLocale || e.id.endsWith(`.${defaultLocale}`)));
 
 const navData = navEntry?.data as { main_menu?: { label: string; href: string }[] } | undefined;
 const menuItems = navData?.main_menu ?? [];
 
 const bizEntry = settingsEntries.find((e) => {
   const data = e.data as { locale?: string };
-  return e.id.startsWith('business') && data.locale === locale;
-}) ?? settingsEntries.find((e) => e.id.startsWith('business') && (e.data as { locale?: string }).locale === defaultLocale);
+  return e.id.startsWith('business') && (data.locale === locale || e.id.endsWith(`.${locale}`));
+}) ?? settingsEntries.find((e) => e.id.startsWith('business') && ((e.data as { locale?: string }).locale === defaultLocale || e.id.endsWith(`.${defaultLocale}`)));
 
 const biz = (bizEntry?.data ?? {}) as { name?: string };
 

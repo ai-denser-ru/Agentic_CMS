@@ -42,7 +42,7 @@ const { Content } = await render(node);
     )}
     {node.data.date && (
       <time datetime={node.data.date.toISOString()} class="text-xs text-gray-500">
-        {node.data.date.toLocaleDateString('es', { year: 'numeric', month: 'long', day: 'numeric' })}
+        {node.data.date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })}
       </time>
     )}
   </div>
