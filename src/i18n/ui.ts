@@ -1,11 +1,8 @@
-/**
- * UI string translations for static interface elements.
- * Content translations live in Markdown files per locale.
- */
+import siteData from '../content/settings/site.json' assert { type: 'json' };
 
-export const defaultLocale = 'es' as const;
 export const locales = ['es', 'pt-br', 'ru', 'en'] as const;
 export type Locale = (typeof locales)[number];
+export const defaultLocale = siteData.defaultLocale as Locale;
 
 export const localeLabels: Record<Locale, string> = {
   es: 'Español',

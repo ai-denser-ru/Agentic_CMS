@@ -69,10 +69,11 @@ export function getLocaleFromId(id: string): Locale {
  */
 export function getSlugFromId(id: string): string {
   const parts = id.split('/');
+  let slug = id;
   if ((locales as readonly string[]).includes(parts[0])) {
-    return parts.slice(1).join('/');
+    slug = parts.slice(1).join('/');
   }
-  return id;
+  return slug.replace(/\.md$/, '').replace(/\.json$/, '');
 }
 
 export { defaultLocale, locales, type Locale } from './ui';
